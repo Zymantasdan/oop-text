@@ -14,6 +14,8 @@ submit.addEventListener('click', event => {
     text = Textarea.value; /* TEXT reiksme isitraukiam, (kai irasysim)*/
     
     const analizatorius = new TextAnalizer(text);
+    analizatorius.addLanguages('lt');
+
     const leterCount = analizatorius.leterCounter(); /* isvestis is main 'skaiciuojame raides' */
     console.log(analizatorius);  
     console.log('raidziu kiekis :', leterCount);

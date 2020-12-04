@@ -1,0 +1,5 @@
+class TextAnalizer {
+
+}
+
+export { TextAnalizer }

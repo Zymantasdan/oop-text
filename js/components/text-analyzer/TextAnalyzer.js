@@ -1,7 +1,7 @@
 class TextAnalizer {
-    constructor(text) {
-        this.text = text;
-        this.abs = {
+    constructor(text) { /* konstruktoriuje yra kintamieji, informacija */
+        this.text = text; /* tekstaskuri liepia isanalizuoti */
+        this.abc = { 
             en: {
                 lowercase: 'qwertyuiopasdfghjklzxcvbnm',
                 uppercase: 'QWERTYUIOPASDFGHJKLZXCVBNM',
@@ -11,37 +11,37 @@ class TextAnalizer {
                 uppercase: 'ĄČĘĖĮŠŲŪŽ',
             },
         };
-        this.languages = ['en'];
+        this.lowercaseEnabled = true; /* pozymiai analizuosiu ir didziosiose ir mazossiose*/
+        this.uppercaseEnabled = true;
+        this.languages = [];
         this.finalAbc = '';
-
+        this.addLanguage('en'); /* kad nepradetum tusciomis pridekime EN kalba */
     }
+    addLanguage(newLang) {
+        if (this.abc[newLang]) {            /* jei as turiu kalba, kalba EN */
+            this.languages.push(newLang);               /* ipusinu nauja kalbos sarasa */
 
-    addLanguages(newLang) { /**i kalba itraukti papildoma kalba */
-        
-        this.languages.push(newLang);
-
-    }
-
-
-    leterCounter() {
-        // console.log('skaiciuojame raides');
-        // return this.text.length;
-        let count = 0;
-
-        for (let letter of this.text ) {
-            if ( this.abs.includes(letter) ) { /** jei abeceleje yra incliudinta reiksme, jeigu taip padidina vienu vienetu*/
-                count++; 
-
+            this.finalAbc = '';             /* finaline abecele yra tuscias dalykas */
+            for (let lang of this.languages) {               /* einu per kalbu sarasa, jei viena kalba suksis viena karta, jei dvi du*/
+                if (this.lowercaseEnabled) {             /* ar reikia naudoti mazasias raides, pozymis yra TRUE*/
+                    this.finalAbc += this.abc[lang].lowercase;          /*mazosioms raidems pradeda skaiciavima */
+                }
+                if (this.uppercaseEnabled) {
+                    this.finalAbc += this.abc[lang].uppercase;
+                }
             }
-
+        } else {
+            console.error(`ERROR: norima (${newLang}) kalba nerasta.`);
         }
-
-        return count;
-
-
     }
-
-
+    leterCount() {
+        let count = 0;
+        for (let letter of this.text) {
+            if (this.finalAbc.includes(letter)) {
+                count++;
+            }
+        }
+        return count;
+    }
 }
-
 export { TextAnalizer }
